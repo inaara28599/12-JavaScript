@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Functions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="leaflet/leaflet.css" rel="stylesheet">
+  <style>
+      #map{ 
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: -1;
+      }
+      .sidebar{
+          max-width: 30vw;
+      }
+      .sidebar li{
+          cursor: pointer;
+      }
+  </style>
+</head>
+<body>
+
+
+    <!-- map holder -->
+    <div id="map"></div>
+
+
+    <!-- bootstrap dropdown https://getbootstrap.com/docs/5.3/components/dropdowns -->
+    <div class="dropdown-holder d-flex w-75 ms-auto pt-3 pe-3">
+      <div class="dropdown ms-auto">
+        <button class="dropdown-toggle btn btn-secondary" type="button" data-bs-toggle="dropdown">
+          Select a location
+        </button>
+        <ul class="dropdown-menu">
+          <li><a id="dc" class="dropdown-item" href="#">Washington, DC</a></li>
+          <li><a id="evanston" class="dropdown-item" href="#">Evanston, IL</a></li>
+          <li><a id="sf" class="dropdown-item" href="#">San Francisco, CA</a></li>
+          <li><a id="tx" class="dropdown-item" href="#">Frisco, TX</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- jquery and leaflet libraries -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="leaflet/leaflet.js"></script>
+
+
+    <!-- your custom code below-->
+    <script>
+        const map = L.map('map', {scrollWheelZoom: false, dragging: true}).setView([38.416, -97.81], 4);
+
+        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+
+        tiles.addTo(map);
+
+        const popup = L.popup();
+
+        
+    $("#dc").on("click", function(){
+    
+        //change text on drop-down button
+        $("button.dropdown-toggle").text("Washington, DC");
+
+        map.flyTo([38.907192,-77.036873], 10);
+
+        popup.setLatLng([38.907192,-77.036873]);
+        popup.setContent("<h2>DC!</h2>");
+        popup.openOn(map);
+
+    });
+
+        $("#evanston").on("click", function(){
+
+        $("button.dropdown-toggle").text("Evanston, IL");
+
+        map.flyTo([42.0470043,-87.6846053], 10);
+
+        popup.setLatLng([42.0470043,-87.6846053]);
+        popup.setContent("<h2>Evanston!</h2>");
+        popup.openOn(map);
+
+    
+     });
+
+
+    </script>
+  </body>
+</html>
